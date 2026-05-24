@@ -274,6 +274,43 @@
           </article>
         </div>
       </section>
+
+      <section class="entry">
+        <div class="entry-header">
+          <h2>Phase 02 - CMS schema và dữ liệu mẫu</h2>
+          <span class="entry-date">2026-05-24</span>
+        </div>
+        <div class="note-grid">
+          <article class="note-card decision">
+            <span class="note-label">Quyết định</span>
+            <p>Giữ nguyên tên field theo plan chính để Phase 03 có thể query ổn định, chỉ bổ sung validation, preview, ordering và query/type còn thiếu.</p>
+          </article>
+          <article class="note-card decision">
+            <span class="note-label">Quyết định</span>
+            <p><code>profile</code> và <code>siteSettings</code> được xử lý như singleton trong Sanity desk structure bằng document id cố định.</p>
+          </article>
+          <article class="note-card warning">
+            <span class="note-label">Giới hạn</span>
+            <p>Không nhập dữ liệu mẫu trực tiếp vào Sanity vì chưa có project id/credentials thật trong môi trường local; thay vào đó sẽ tạo tài liệu hướng dẫn dữ liệu mẫu.</p>
+          </article>
+          <article class="note-card done">
+            <span class="note-label">Đã thực hiện</span>
+            <p>Bổ sung validation, preview và orderings cho schema; cấu hình <code>profile</code> và <code>siteSettings</code> như singleton trong Studio structure.</p>
+          </article>
+          <article class="note-card done">
+            <span class="note-label">Đã thực hiện</span>
+            <p>Mở rộng GROQ queries và TypeScript content types để Phase 03 có contract dữ liệu rõ hơn.</p>
+          </article>
+          <article class="note-card done">
+            <span class="note-label">Đã thực hiện</span>
+            <p>Tạo <code>docs/sanity-sample-data.md</code> làm checklist dữ liệu mẫu thay cho seed trực tiếp vào Sanity.</p>
+          </article>
+          <article class="note-card verify">
+            <span class="note-label">Xác minh</span>
+            <p>Đã chạy <code>npm run typecheck</code>, <code>npm run lint</code>, <code>npm run build</code>; smoke test <code>/admin</code> trả HTTP 200.</p>
+          </article>
+        </div>
+      </section>
     </main>
   </body>
 </html>

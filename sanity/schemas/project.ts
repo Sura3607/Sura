@@ -4,17 +4,39 @@ export const project = defineType({
   name: "project",
   title: "Project",
   type: "document",
+  orderings: [
+    {
+      title: "Priority, then newest",
+      name: "priorityThenNewest",
+      by: [
+        { field: "priority", direction: "asc" },
+        { field: "startDate", direction: "desc" },
+      ],
+    },
+  ],
   fields: [
     defineField({ name: "title", title: "Title", type: "string", validation: (Rule) => Rule.required() }),
     defineField({ name: "slug", title: "Slug", type: "slug", options: { source: "title" }, validation: (Rule) => Rule.required() }),
     defineField({ name: "thumbnail", title: "Thumbnail", type: "image", options: { hotspot: true } }),
-    defineField({ name: "summary", title: "Summary", type: "text", rows: 3 }),
+    defineField({
+      name: "summary",
+      title: "Summary",
+      type: "text",
+      rows: 3,
+      validation: (Rule) => Rule.required().max(220),
+    }),
     defineField({ name: "description", title: "Description", type: "blockContent" }),
     defineField({ name: "problem", title: "Problem", type: "blockContent" }),
     defineField({ name: "solution", title: "Solution", type: "blockContent" }),
     defineField({ name: "role", title: "Role", type: "string" }),
     defineField({ name: "architecture", title: "Architecture", type: "blockContent" }),
-    defineField({ name: "techStack", title: "Tech Stack", type: "array", of: [{ type: "string" }] }),
+    defineField({
+      name: "techStack",
+      title: "Tech Stack",
+      type: "array",
+      of: [{ type: "string" }],
+      validation: (Rule) => Rule.min(1),
+    }),
     defineField({ name: "category", title: "Category", type: "string" }),
     defineField({
       name: "status",
@@ -36,4 +58,19 @@ export const project = defineType({
     defineField({ name: "seoDescription", title: "SEO Description", type: "text", rows: 2 }),
     defineField({ name: "ogImage", title: "Open Graph Image", type: "image", options: { hotspot: true } }),
   ],
+  preview: {
+    select: {
+      title: "title",
+      category: "category",
+      status: "status",
+      media: "thumbnail",
+    },
+    prepare({ title, category, status, media }) {
+      return {
+        title,
+        subtitle: [category, status].filter(Boolean).join(" · "),
+        media,
+      };
+    },
+  },
 });

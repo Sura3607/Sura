@@ -1,10 +1,26 @@
 export type Project = {
   title: string;
   slug: { current: string };
+  thumbnail?: unknown;
   summary?: string;
+  description?: unknown[];
+  problem?: unknown[];
+  solution?: unknown[];
+  role?: string;
+  architecture?: unknown[];
   techStack?: string[];
   category?: string;
   status?: "Learning" | "In Progress" | "Completed" | "Archived";
+  featured?: boolean;
+  priority?: number;
   githubUrl?: string;
   demoUrl?: string;
+  screenshots?: unknown[];
+  startDate?: string;
+  endDate?: string;
+  lessonsLearned?: unknown[];
+  futureImprovements?: unknown[];
+  seoTitle?: string;
+  seoDescription?: string;
+  ogImage?: unknown;
 };

@@ -1,5 +1,13 @@
 # Phase 02 - CMS Schema Và Dữ Liệu Mẫu
 
+## Trạng Thái Thực Hiện
+
+- Schema completeness: Hoàn tất local.
+- Studio usability: Hoàn tất local với preview, ordering và singleton desk items cho `profile`/`siteSettings`.
+- Sample data contract: Hoàn tất bằng tài liệu `docs/sanity-sample-data.md`.
+- Nhập dữ liệu trực tiếp vào Sanity: Chưa thực hiện vì local chưa có Sanity project id/credentials thật.
+- Verification đã chạy: `npm run typecheck`, `npm run lint`, `npm run build`, smoke test `/admin`.
+
 ## Mục Tiêu Phase
 
 Hoàn thiện schema Sanity và dữ liệu mẫu tối thiểu để frontend có nguồn dữ liệu rõ ràng cho profile, projects, skills, certificates, experiences, blog posts và site settings.
@@ -30,26 +38,26 @@ Hoàn thiện schema Sanity và dữ liệu mẫu tối thiểu để frontend c
 
 ### Checkpoint 1 - Schema completeness
 
-- [ ] So sánh từng schema với mục 6 trong plan chính.
-- [ ] Bổ sung field thiếu nhưng không đổi tên field đã được frontend dùng nếu không cần thiết.
-- [ ] Đảm bảo `slug` bắt buộc cho project và blog post.
-- [ ] Đảm bảo image fields dùng `hotspot` ở những nơi cần crop.
+- [x] So sánh từng schema với mục 6 trong plan chính.
+- [x] Bổ sung field thiếu nhưng không đổi tên field đã được frontend dùng nếu không cần thiết.
+- [x] Đảm bảo `slug` bắt buộc cho project và blog post.
+- [x] Đảm bảo image fields dùng `hotspot` ở những nơi cần crop.
 
 Điều kiện hoàn thành: Studio schema load được và TypeScript không lỗi.
 
 ### Checkpoint 2 - Studio usability
 
-- [ ] Thêm preview cho project, blog post, skill, certificate, experience nếu thiếu.
-- [ ] Sắp xếp desk structure theo nhóm dễ nhập liệu.
-- [ ] Đảm bảo profile/siteSettings có hướng dẫn dùng như single document nếu cần.
+- [x] Thêm preview cho project, blog post, skill, certificate, experience nếu thiếu.
+- [x] Sắp xếp desk structure theo nhóm dễ nhập liệu.
+- [x] Đảm bảo profile/siteSettings có hướng dẫn dùng như single document nếu cần.
 
 Điều kiện hoàn thành: người dùng có thể biết cần nhập tài liệu nào trước.
 
 ### Checkpoint 3 - Sample data contract
 
-- [ ] Chuẩn bị danh sách dữ liệu mẫu: 1 profile, 3 projects, 10 skills, tối đa 2 certificates nếu có, 1 blog post.
-- [ ] Nếu không thể tạo dữ liệu trực tiếp vì thiếu Sanity credentials, ghi rõ hướng dẫn nhập trong notes hoặc file docs.
-- [ ] Đảm bảo query không giả định dữ liệu luôn tồn tại.
+- [x] Chuẩn bị danh sách dữ liệu mẫu: 1 profile, 3 projects, 10 skills, tối đa 2 certificates nếu có, 1 blog post.
+- [x] Nếu không thể tạo dữ liệu trực tiếp vì thiếu Sanity credentials, ghi rõ hướng dẫn nhập trong notes hoặc file docs.
+- [x] Đảm bảo query không giả định dữ liệu luôn tồn tại.
 
 Điều kiện hoàn thành: frontend phase sau biết chính xác dữ liệu nào có thể query.
 

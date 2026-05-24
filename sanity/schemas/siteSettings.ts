@@ -5,11 +5,17 @@ export const siteSettings = defineType({
   title: "Site Settings",
   type: "document",
   fields: [
-    defineField({ name: "siteTitle", title: "Site Title", type: "string" }),
-    defineField({ name: "siteDescription", title: "Site Description", type: "text", rows: 2 }),
+    defineField({ name: "siteTitle", title: "Site Title", type: "string", validation: (Rule) => Rule.required() }),
+    defineField({
+      name: "siteDescription",
+      title: "Site Description",
+      type: "text",
+      rows: 2,
+      validation: (Rule) => Rule.required().max(160),
+    }),
     defineField({ name: "siteUrl", title: "Site URL", type: "url" }),
-    defineField({ name: "defaultOgImage", title: "Default Open Graph Image", type: "image" }),
-    defineField({ name: "favicon", title: "Favicon", type: "image" }),
+    defineField({ name: "defaultOgImage", title: "Default Open Graph Image", type: "image", options: { hotspot: true } }),
+    defineField({ name: "favicon", title: "Favicon", type: "image", options: { hotspot: true } }),
     defineField({
       name: "navbarLinks",
       title: "Navbar Links",
@@ -18,8 +24,8 @@ export const siteSettings = defineType({
         {
           type: "object",
           fields: [
-            { name: "label", title: "Label", type: "string" },
-            { name: "href", title: "Href", type: "string" },
+            defineField({ name: "label", title: "Label", type: "string", validation: (Rule) => Rule.required() }),
+            defineField({ name: "href", title: "Href", type: "string", validation: (Rule) => Rule.required() }),
           ],
         },
       ],
@@ -33,12 +39,19 @@ export const siteSettings = defineType({
         {
           type: "object",
           fields: [
-            { name: "label", title: "Label", type: "string" },
-            { name: "href", title: "Href", type: "url" },
+            defineField({ name: "label", title: "Label", type: "string", validation: (Rule) => Rule.required() }),
+            defineField({ name: "href", title: "Href", type: "url", validation: (Rule) => Rule.required() }),
           ],
         },
       ],
     }),
     defineField({ name: "seoKeywords", title: "SEO Keywords", type: "array", of: [{ type: "string" }] }),
   ],
+  preview: {
+    select: {
+      title: "siteTitle",
+      subtitle: "siteUrl",
+      media: "defaultOgImage",
+    },
+  },
 });

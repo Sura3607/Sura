@@ -6,9 +6,15 @@ export const profile = defineType({
   type: "document",
   fields: [
     defineField({ name: "name", title: "Name", type: "string", validation: (Rule) => Rule.required() }),
-    defineField({ name: "title", title: "Title", type: "string" }),
+    defineField({ name: "title", title: "Title", type: "string", validation: (Rule) => Rule.required() }),
     defineField({ name: "avatar", title: "Avatar", type: "image", options: { hotspot: true } }),
-    defineField({ name: "shortBio", title: "Short Bio", type: "text", rows: 3 }),
+    defineField({
+      name: "shortBio",
+      title: "Short Bio",
+      type: "text",
+      rows: 3,
+      validation: (Rule) => Rule.max(240),
+    }),
     defineField({ name: "longBio", title: "Long Bio", type: "blockContent" }),
     defineField({ name: "location", title: "Location", type: "string" }),
     defineField({ name: "email", title: "Email", type: "email" }),
@@ -20,4 +26,11 @@ export const profile = defineType({
     defineField({ name: "heroCtaPrimary", title: "Hero CTA Primary", type: "string" }),
     defineField({ name: "heroCtaSecondary", title: "Hero CTA Secondary", type: "string" }),
   ],
+  preview: {
+    select: {
+      title: "name",
+      subtitle: "title",
+      media: "avatar",
+    },
+  },
 });
