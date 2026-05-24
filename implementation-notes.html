@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Implementation Notes</title>
+    <style>
+      :root {
+        --canvas: #ffffff;
+        --ink: #1b1b1b;
+        --muted: rgba(27, 27, 27, 0.62);
+        --line: rgba(27, 27, 27, 0.12);
+        --soft: #f5f5f5;
+        --accent: #2b7fff;
+        --blue-soft: #eef5ff;
+        --green-soft: #eefaf3;
+        --amber-soft: #fff7df;
+        --rose-soft: #fff0f0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--canvas);
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.5;
+      }
+
+      main {
+        width: min(1120px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 56px 0 72px;
+      }
+
+      .page-header {
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 28px;
+      }
+
+      .eyebrow {
+        color: #426188;
+        font-size: 13px;
+        font-weight: 700;
+        margin: 0 0 10px;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        font-size: clamp(40px, 7vw, 88px);
+        letter-spacing: 0;
+        line-height: 0.95;
+        margin: 0;
+      }
+
+      .intro {
+        color: var(--muted);
+        font-size: 16px;
+        font-weight: 500;
+        max-width: 720px;
+        margin: 18px 0 0;
+      }
+
+      .entry {
+        margin-top: 36px;
+      }
+
+      .entry-header {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+
+      h2 {
+        font-size: clamp(24px, 3vw, 36px);
+        line-height: 1.1;
+        margin: 0;
+      }
+
+      .entry-date {
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .note-grid {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .note-card {
+        background: var(--soft);
+        border: 1px solid transparent;
+        border-radius: 14px;
+        min-height: 148px;
+        padding: 18px;
+      }
+
+      .note-card.full {
+        grid-column: 1 / -1;
+      }
+
+      .note-card.decision {
+        background: var(--blue-soft);
+      }
+
+      .note-card.tradeoff {
+        background: var(--amber-soft);
+      }
+
+      .note-card.done {
+        background: var(--green-soft);
+      }
+
+      .note-card.verify {
+        background: var(--soft);
+        border-color: var(--line);
+      }
+
+      .note-card.warning {
+        background: var(--rose-soft);
+      }
+
+      .note-label {
+        color: #426188;
+        display: inline-flex;
+        font-size: 12px;
+        font-weight: 800;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+      }
+
+      .note-card p {
+        font-size: 15px;
+        font-weight: 550;
+        margin: 0;
+      }
+
+      code {
+        background: rgba(255, 255, 255, 0.72);
+        border: 1px solid rgba(27, 27, 27, 0.1);
+        border-radius: 4px;
+        font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+        font-size: 0.92em;
+        padding: 2px 5px;
+      }
+
+      @media (max-width: 760px) {
+        main {
+          width: min(100% - 28px, 1120px);
+          padding-top: 36px;
+        }
+
+        .entry-header {
+          align-items: start;
+          flex-direction: column;
+        }
+
+        .note-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .note-card {
+          min-height: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header class="page-header">
+        <p class="eyebrow">Sura project</p>
+        <h1>Implementation Notes</h1>
+        <p class="intro">
+          Nhật ký quyết định trong quá trình triển khai. Các note bên dưới ghi lại giả định,
+          thay đổi, đánh đổi, blocker và kết quả xác minh để những lượt làm sau không phải đoán lại.
+        </p>
+      </header>
+
+      <section class="entry">
+        <div class="entry-header">
+          <h2>Tạo tài liệu phase theo plan hiện có</h2>
+          <span class="entry-date">2026-05-24</span>
+        </div>
+        <div class="note-grid">
+          <article class="note-card full">
+            <span class="note-label">Phạm vi</span>
+            <p>Chỉ tạo tài liệu Markdown trong <code>docs/phases/</code> và cập nhật link trong plan chính.</p>
+          </article>
+          <article class="note-card decision">
+            <span class="note-label">Quyết định</span>
+            <p>Dùng đúng 6 phase gốc từ mục 17 của <code>docs/portfolio-nextjs-sanity-vercel-plan.md</code>, không tách thêm subphase thành file riêng.</p>
+          </article>
+          <article class="note-card decision">
+            <span class="note-label">Quyết định</span>
+            <p>Mỗi file phase dùng cùng một cấu trúc để agent khác có thể triển khai từng phase như một lượt làm độc lập.</p>
+          </article>
+          <article class="note-card tradeoff">
+            <span class="note-label">Đánh đổi</span>
+            <p>Phase 3 vẫn là một file lớn theo yêu cầu, nhưng bên trong sẽ chia checkpoint theo cụm route để giảm rủi ro hết token khi triển khai.</p>
+          </article>
+          <article class="note-card done">
+            <span class="note-label">Đã thực hiện</span>
+            <p>Tạo 6 file phase trong <code>docs/phases/</code> và cập nhật mục 17 của plan chính với bảng link tới từng file.</p>
+          </article>
+          <article class="note-card done">
+            <span class="note-label">Đã thực hiện</span>
+            <p>Cập nhật cây repository trong plan chính để thể hiện thư mục <code>docs/phases/</code>.</p>
+          </article>
+          <article class="note-card verify">
+            <span class="note-label">Xác minh</span>
+            <p>Đã kiểm tra 6 file phase tồn tại, plan chính có link tới từng file, và không còn path cũ <code>../DESIGN.md</code> hoặc thư mục project cũ trong tài liệu.</p>
+          </article>
+          <article class="note-card warning full">
+            <span class="note-label">Không chạy build</span>
+            <p>Không chạy <code>npm run build</code> vì thay đổi chỉ nằm ở tài liệu Markdown và note HTML.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="entry">
+        <div class="entry-header">
+          <h2>Thiết kế lại trang note</h2>
+          <span class="entry-date">2026-05-24</span>
+        </div>
+        <div class="note-grid">
+          <article class="note-card decision">
+            <span class="note-label">Quyết định</span>
+            <p>Chuyển note từ HTML thô sang layout các ô ghi chú để dễ đọc, dễ scan và bám tinh thần UI sáng trong <code>docs/DESIGN.md</code>.</p>
+          </article>
+          <article class="note-card done">
+            <span class="note-label">Đã thực hiện</span>
+            <p>Giữ nguyên toàn bộ nội dung note cũ, chỉ thay đổi cách trình bày và thêm CSS nội bộ trong cùng file.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="entry">
+        <div class="entry-header">
+          <h2>Phase 01 - Setup nền tảng</h2>
+          <span class="entry-date">2026-05-24</span>
+        </div>
+        <div class="note-grid">
+          <article class="note-card decision">
+            <span class="note-label">Quyết định</span>
+            <p>Phase 01 được xử lý như bước làm sạch và xác minh foundation hiện có, không xây thêm UI/page ngoài phạm vi phase.</p>
+          </article>
+          <article class="note-card warning">
+            <span class="note-label">Phát hiện</span>
+            <p><code>.env.example</code> đang bị ignore bởi rule <code>.env*</code>, nên cần thêm ngoại lệ để file ví dụ env có thể được commit theo plan.</p>
+          </article>
+          <article class="note-card decision">
+            <span class="note-label">Quyết định</span>
+            <p>Đổi package name từ <code>portfolio</code> sang <code>sura</code> để khớp root project hiện tại.</p>
+          </article>
+          <article class="note-card done">
+            <span class="note-label">Đã thực hiện</span>
+            <p>Thêm ngoại lệ <code>!.env.example</code> trong <code>.gitignore</code> để file env mẫu không bị ignore.</p>
+          </article>
+          <article class="note-card verify">
+            <span class="note-label">Xác minh</span>
+            <p>Đã chạy <code>npm run typecheck</code>, <code>npm run lint</code>, <code>npm run build</code>; smoke test <code>/</code>, <code>/admin</code> và <code>/robots.txt</code> đều trả HTTP 200.</p>
+          </article>
+          <article class="note-card warning full">
+            <span class="note-label">Blocker ngoài local</span>
+            <p>Chưa kết nối GitHub/Vercel preview deployment trong Phase 01 vì cần tài khoản/project ngoài local. README đã ghi handoff deploy.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

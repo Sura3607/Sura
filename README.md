@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sura Portfolio
 
-## Getting Started
+Next.js + TypeScript + Tailwind CSS portfolio scaffold with Sanity CMS, Vercel-ready routing, SEO helpers, contact/revalidation API routes, and UI tokens inspired by `docs/DESIGN.md`.
 
-First, run the development server:
+## Commands
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run build
+npm run lint
+npm run typecheck
+npm run sanity
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Local app: `http://127.0.0.1:3000`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Sanity Studio route: `/admin`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Environment
 
-## Learn More
+Copy `.env.example` to `.env.local` when real service values are ready.
 
-To learn more about Next.js, take a look at the following resources:
+```env
+NEXT_PUBLIC_SANITY_PROJECT_ID=
+NEXT_PUBLIC_SANITY_DATASET=production
+NEXT_PUBLIC_SANITY_API_VERSION=2026-05-24
+SANITY_REVALIDATE_SECRET=
+SANITY_READ_TOKEN=
+RESEND_API_KEY=
+CONTACT_RECEIVER_EMAIL=
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```txt
+app/                  App Router pages, API routes, SEO files
+components/           Layout, section, project, and UI components
+lib/                  Sanity client, queries, SEO, validators, utilities
+sanity/               Studio structure and schema documents
+types/                Shared TypeScript content types
+docs/                 Design reference, project plan, and phase handoff docs
+```
 
-## Deploy on Vercel
+## Design Direction
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Use `docs/DESIGN.md` as the source of truth for color, typography, spacing, surfaces, and button/card behavior. The page layout follows an Air-style product/workflow rhythm: strong headline, clear CTA, clean light surfaces, project evidence, and minimal decoration.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deploy Handoff
+
+The local foundation is ready for deployment. To go live, create or connect a GitHub repository, import the project into Vercel, add the environment variables from `.env.example`, then use the preview deployment before configuring the production domain.
