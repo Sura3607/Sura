@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ContentBlocks } from "@/components/ui/content-blocks";
 import { PageShell } from "@/components/ui/page-shell";
 import { getProjectBySlug } from "@/lib/content";
+import { createMetadata } from "@/lib/seo";
 
 type ProjectDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -14,10 +15,11 @@ export async function generateMetadata({ params }: ProjectDetailPageProps) {
   const { slug } = await params;
   const project = await getProjectBySlug(slug);
 
-  return {
+  return createMetadata({
     title: project?.seoTitle ?? project?.title ?? slug,
     description: project?.seoDescription ?? project?.summary ?? "Project detail page.",
-  };
+    path: `/projects/${slug}`,
+  });
 }
 
 export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {

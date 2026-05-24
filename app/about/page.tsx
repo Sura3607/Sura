@@ -3,11 +3,13 @@ import { SectionHeader } from "@/components/sections/section-header";
 import { ContentBlocks } from "@/components/ui/content-blocks";
 import { PageShell } from "@/components/ui/page-shell";
 import { formatDate, getCertificates, getExperiences, getProfile } from "@/lib/content";
+import { createMetadata } from "@/lib/seo";
 
-export const metadata = {
+export const metadata = createMetadata({
   title: "About",
   description: "Bio, education, experience, and certificates.",
-};
+  path: "/about",
+});
 
 export default async function AboutPage() {
   const [profile, experiences, certificates] = await Promise.all([

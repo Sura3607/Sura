@@ -4,11 +4,13 @@ import { Button } from "@/components/ui/button";
 import { ContentBlocks } from "@/components/ui/content-blocks";
 import { PageShell } from "@/components/ui/page-shell";
 import { formatDate, getCertificates, getExperiences, getProfile, getSkills } from "@/lib/content";
+import { createMetadata } from "@/lib/seo";
 
-export const metadata = {
+export const metadata = createMetadata({
   title: "Resume",
   description: "Online resume and downloadable PDF.",
-};
+  path: "/resume",
+});
 
 export default async function ResumePage() {
   const [profile, experiences, certificates, skills] = await Promise.all([

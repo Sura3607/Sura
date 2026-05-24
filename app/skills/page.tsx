@@ -1,11 +1,13 @@
 import { SectionHeader } from "@/components/sections/section-header";
 import { PageShell } from "@/components/ui/page-shell";
 import { getSkills, groupSkills } from "@/lib/content";
+import { createMetadata } from "@/lib/seo";
 
-export const metadata = {
+export const metadata = createMetadata({
   title: "Skills",
   description: "Technical skills grouped by category and project evidence.",
-};
+  path: "/skills",
+});
 
 export default async function SkillsPage() {
   const skills = await getSkills();

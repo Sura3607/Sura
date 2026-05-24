@@ -1,10 +1,12 @@
 import {
   blogPostBySlugQuery,
+  blogPostSlugsQuery,
   certificatesQuery,
   experiencesQuery,
   featuredProjectsQuery,
   profileQuery,
   projectBySlugQuery,
+  projectSlugsQuery,
   projectsQuery,
   publishedBlogPostsQuery,
   siteSettingsQuery,
@@ -55,13 +57,14 @@ const hasSanityConfig = Boolean(
 async function fetchFromSanity<T>(
   query: string,
   params?: Record<string, string>,
+  tags?: string[],
 ): Promise<T | null> {
   if (!hasSanityConfig) {
     return null;
   }
 
   try {
-    return await sanityClient.fetch<T>(query, params ?? {});
+    return await sanityClient.fetch<T>(query, params ?? {}, tags ? { next: { tags } } : {});
   } catch (error) {
     console.warn("Sanity fetch failed, using fallback content.", error);
     return null;
@@ -221,7 +224,7 @@ export const fallbackBlogPosts: BlogPost[] = [
 
 export async function getSiteSettings() {
   return (
-    (await fetchFromSanity<SiteSettings>(siteSettingsQuery)) ?? {
+    (await fetchFromSanity<SiteSettings>(siteSettingsQuery, undefined, ["siteSettings"])) ?? {
       siteTitle: "Sura Portfolio",
       siteDescription:
         "Portfolio for AI, backend systems, and product-minded software engineering.",
@@ -232,47 +235,75 @@ export async function getSiteSettings() {
 }
 
 export async function getProfile() {
-  return (await fetchFromSanity<Profile>(profileQuery)) ?? fallbackProfile;
+  return (await fetchFromSanity<Profile>(profileQuery, undefined, ["profile"])) ?? fallbackProfile;
 }
 
 export async function getProjects() {
-  const projects = await fetchFromSanity<Project[]>(projectsQuery);
+  const projects = await fetchFromSanity<Project[]>(projectsQuery, undefined, ["projects"]);
   return projects?.length ? projects : fallbackProjects;
 }
 
 export async function getFeaturedProjects() {
-  const projects = await fetchFromSanity<Project[]>(featuredProjectsQuery);
+  const projects = await fetchFromSanity<Project[]>(featuredProjectsQuery, undefined, ["projects"]);
   return projects?.length ? projects : fallbackProjects.filter((project) => project.featured);
 }
 
 export async function getProjectBySlug(slug: string) {
-  const project = await fetchFromSanity<Project>(projectBySlugQuery, { slug });
+  const project = await fetchFromSanity<Project>(projectBySlugQuery, { slug }, [
+    "projects",
+    `project:${slug}`,
+  ]);
   return project ?? fallbackProjects.find((item) => item.slug.current === slug) ?? null;
 }
 
 export async function getSkills() {
-  const skills = await fetchFromSanity<Skill[]>(skillsQuery);
+  const skills = await fetchFromSanity<Skill[]>(skillsQuery, undefined, ["skills"]);
   return skills?.length ? skills : fallbackSkills;
 }
 
 export async function getCertificates() {
-  const certificates = await fetchFromSanity<Certificate[]>(certificatesQuery);
+  const certificates = await fetchFromSanity<Certificate[]>(certificatesQuery, undefined, [
+    "certificates",
+  ]);
   return certificates?.length ? certificates : fallbackCertificates;
 }
 
 export async function getExperiences() {
-  const experiences = await fetchFromSanity<Experience[]>(experiencesQuery);
+  const experiences = await fetchFromSanity<Experience[]>(experiencesQuery, undefined, [
+    "experiences",
+  ]);
   return experiences?.length ? experiences : fallbackExperiences;
 }
 
 export async function getBlogPosts() {
-  const posts = await fetchFromSanity<BlogPost[]>(publishedBlogPostsQuery);
+  const posts = await fetchFromSanity<BlogPost[]>(publishedBlogPostsQuery, undefined, ["blog"]);
   return posts?.length ? posts : fallbackBlogPosts;
 }
 
 export async function getBlogPostBySlug(slug: string) {
-  const post = await fetchFromSanity<BlogPost>(blogPostBySlugQuery, { slug });
+  const post = await fetchFromSanity<BlogPost>(blogPostBySlugQuery, { slug }, [
+    "blog",
+    `blog:${slug}`,
+  ]);
   return post ?? fallbackBlogPosts.find((item) => item.slug.current === slug) ?? null;
+}
+
+export async function getProjectSlugs() {
+  const slugs = await fetchFromSanity<Array<{ slug: string }>>(
+    projectSlugsQuery,
+    undefined,
+    ["projects"],
+  );
+  return slugs?.length ? slugs : fallbackProjects.map((project) => ({ slug: project.slug.current }));
+}
+
+export async function getBlogPostSlugs() {
+  const slugs = await fetchFromSanity<Array<{ slug: string }>>(
+    blogPostSlugsQuery,
+    undefined,
+    ["blog"],
+  );
+  return slugs?.length ? slugs : fallbackBlogPosts.map((post) => ({ slug: post.slug.current }));
 }
 
 export function formatDate(value?: string) {

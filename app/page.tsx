@@ -3,6 +3,14 @@ import { ProjectCard } from "@/components/project/project-card";
 import { SectionHeader } from "@/components/sections/section-header";
 import { Button } from "@/components/ui/button";
 import { getFeaturedProjects, getProfile, getSkills } from "@/lib/content";
+import { createMetadata } from "@/lib/seo";
+
+export const metadata = createMetadata({
+  title: "Sura Portfolio",
+  description:
+    "Portfolio for AI workflows, backend systems, and product-minded software engineering.",
+  path: "/",
+});
 
 export default async function Home() {
   const [profile, projects, skills] = await Promise.all([

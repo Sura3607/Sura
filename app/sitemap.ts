@@ -1,10 +1,20 @@
 import type { MetadataRoute } from "next";
+import { getBlogPostSlugs, getProjectSlugs } from "@/lib/content";
+import { getBaseUrl } from "@/lib/seo";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const baseUrl = getBaseUrl();
   const routes = ["", "/about", "/projects", "/skills", "/resume", "/blog", "/contact"];
+  const [projectSlugs, blogSlugs] = await Promise.all([
+    getProjectSlugs(),
+    getBlogPostSlugs(),
+  ]);
+  const dynamicRoutes = [
+    ...projectSlugs.map((item) => `/projects/${item.slug}`),
+    ...blogSlugs.map((item) => `/blog/${item.slug}`),
+  ];
 
-  return routes.map((route) => ({
+  return [...routes, ...dynamicRoutes].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
   }));

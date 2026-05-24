@@ -1,16 +1,21 @@
 import type { Metadata } from "next";
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
+import { createMetadata } from "@/lib/seo";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  ...createMetadata({
+    title: "Sura Portfolio",
+    description:
+      "Portfolio for AI, backend systems, and product-minded software engineering.",
+    path: "/",
+  }),
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: {
-    default: "Developer Portfolio",
-    template: "%s | Developer Portfolio",
+    default: "Sura Portfolio",
+    template: "%s | Sura Portfolio",
   },
-  description:
-    "A modern developer portfolio powered by Next.js, Sanity CMS, and Vercel.",
 };
 
 export default function RootLayout({

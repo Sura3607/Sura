@@ -3,11 +3,13 @@ import { SectionHeader } from "@/components/sections/section-header";
 import { EmptyState } from "@/components/ui/empty-state";
 import { PageShell } from "@/components/ui/page-shell";
 import { getProjects } from "@/lib/content";
+import { createMetadata } from "@/lib/seo";
 
-export const metadata = {
+export const metadata = createMetadata({
   title: "Projects",
   description: "Selected software, backend, and AI projects.",
-};
+  path: "/projects",
+});
 
 export default async function ProjectsPage() {
   const projects = await getProjects();

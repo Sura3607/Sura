@@ -4,11 +4,13 @@ import { SectionHeader } from "@/components/sections/section-header";
 import { EmptyState } from "@/components/ui/empty-state";
 import { PageShell } from "@/components/ui/page-shell";
 import { getBlogPosts } from "@/lib/content";
+import { createMetadata } from "@/lib/seo";
 
-export const metadata = {
+export const metadata = createMetadata({
   title: "Blog",
   description: "Technical notes and project writeups.",
-};
+  path: "/blog",
+});
 
 export default async function BlogPage() {
   const posts = await getBlogPosts();

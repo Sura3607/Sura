@@ -3,6 +3,7 @@ import { SectionHeader } from "@/components/sections/section-header";
 import { ContentBlocks } from "@/components/ui/content-blocks";
 import { PageShell } from "@/components/ui/page-shell";
 import { getBlogPostBySlug } from "@/lib/content";
+import { createMetadata } from "@/lib/seo";
 
 type BlogDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -12,10 +13,12 @@ export async function generateMetadata({ params }: BlogDetailPageProps) {
   const { slug } = await params;
   const post = await getBlogPostBySlug(slug);
 
-  return {
+  return createMetadata({
     title: post?.seoTitle ?? post?.title ?? slug,
     description: post?.seoDescription ?? post?.excerpt ?? "Blog detail page.",
-  };
+    path: `/blog/${slug}`,
+    type: "article",
+  });
 }
 
 export default async function BlogDetailPage({ params }: BlogDetailPageProps) {

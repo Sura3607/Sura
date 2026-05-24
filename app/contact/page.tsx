@@ -1,13 +1,16 @@
 import { ExternalLink, Mail, MapPin } from "lucide-react";
+import { ContactForm } from "@/components/contact/contact-form";
 import { SectionHeader } from "@/components/sections/section-header";
 import { Button } from "@/components/ui/button";
 import { PageShell } from "@/components/ui/page-shell";
 import { getProfile } from "@/lib/content";
+import { createMetadata } from "@/lib/seo";
 
-export const metadata = {
+export const metadata = createMetadata({
   title: "Contact",
   description: "Contact information and inquiry path.",
-};
+  path: "/contact",
+});
 
 export default async function ContactPage() {
   const profile = await getProfile();
@@ -54,6 +57,18 @@ export default async function ContactPage() {
           ) : null}
         </div>
       </div>
+
+      <section className="mt-10 rounded-[var(--radius-cards)] border border-midnight-ink/10 p-6">
+        <h2 className="text-2xl font-black leading-tight text-charcoal-void">
+          Send a structured message
+        </h2>
+        <p className="mt-3 text-sm font-medium leading-6 text-midnight-ink/65">
+          This form uses the server route and falls back to email if Resend is not configured.
+        </p>
+        <div className="mt-6">
+          <ContactForm fallbackEmail={profile.email} />
+        </div>
+      </section>
     </PageShell>
   );
 }
