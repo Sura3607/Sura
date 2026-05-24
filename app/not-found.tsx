@@ -1,13 +1,21 @@
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <main className="mx-auto flex min-h-screen max-w-3xl flex-col justify-center px-6">
+    <main className="mx-auto flex min-h-[calc(100vh-72px)] max-w-3xl flex-col justify-center px-6 py-16">
       <p className="text-sm font-medium text-sky-blue">404</p>
-      <h1 className="mt-4 text-5xl font-black leading-none text-charcoal-void">
+      <h1 className="mt-4 text-5xl font-black leading-none text-charcoal-void sm:text-6xl">
         Page not found.
       </h1>
-      <Link className="mt-8 font-medium underline" href="/">
+      <p className="mt-5 text-base font-medium leading-7 text-midnight-ink/65">
+        The page may have moved, or the matching Sanity document has not been published yet.
+      </p>
+      <Link
+        className="mt-8 inline-flex w-fit items-center gap-2 rounded-[var(--radius-buttons)] border border-vivid-azure px-4 py-3 text-sm font-medium"
+        href="/"
+      >
+        <ArrowLeft size={17} />
         Back to home
       </Link>
     </main>
