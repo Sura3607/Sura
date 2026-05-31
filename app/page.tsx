@@ -1,16 +1,19 @@
 import {
   ArrowUpRight,
   Award,
+  Braces,
+  CheckCircle2,
   ExternalLink,
   Mail,
   MapPin,
+  Terminal,
 } from "lucide-react";
-import Image from "next/image";
 import { ContactForm } from "@/components/contact/contact-form";
 import { ProjectCard } from "@/components/project/project-card";
 import { SectionHeader } from "@/components/sections/section-header";
 import { Button } from "@/components/ui/button";
 import { ContentBlocks } from "@/components/ui/content-blocks";
+import { HeroThreeObject } from "@/components/visual/hero-three-object";
 import {
   formatDate,
   getCertificates,
@@ -47,28 +50,34 @@ export default async function Home() {
     profile.linkedinUrl ? { label: "LinkedIn", href: profile.linkedinUrl } : null,
     profile.facebookUrl ? { label: "Facebook", href: profile.facebookUrl } : null,
   ].filter(Boolean) as Array<{ label: string; href: string }>;
+  const highlightedSkills = skills.slice(0, 6);
+  const currentFocus = [
+    "AI workflows",
+    "Backend systems",
+    "Cybersecurity-aware engineering",
+  ];
 
   return (
     <main className="bg-cloud-canvas text-midnight-ink">
-      <section className="relative overflow-hidden border-b border-midnight-ink/10" id="top">
-        <div className="absolute inset-x-0 top-0 h-32 bg-vapor-gray/70" />
-        <div className="relative mx-auto grid max-w-7xl gap-10 px-6 pb-16 pt-14 sm:px-8 sm:pt-18 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:px-10 lg:pb-20 lg:pt-24">
+      <section className="resend-grid light-ray relative overflow-hidden border-b border-graphite-rail" id="top">
+        <div className="relative z-10 mx-auto grid min-h-[calc(100vh-64px)] max-w-7xl gap-12 px-6 py-16 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:px-10 lg:py-24">
           <div className="motion-reveal max-w-3xl">
             <div className="mb-7 flex flex-wrap items-center gap-2">
-              <span className="rounded-[var(--radius-buttons)] bg-cloud-canvas px-3 py-1.5 text-sm font-medium text-sky-blue">
-                {profile.title}
+              <span className="rounded-full border border-graphite-rail px-3 py-1.5 font-mono text-xs text-charcoal-void">
+                Available for engineering roles
               </span>
               {profile.location ? (
-                <span className="inline-flex items-center gap-2 rounded-[var(--radius-buttons)] border border-midnight-ink/10 px-3 py-1.5 text-sm font-medium text-midnight-ink/55">
-                  <MapPin size={15} />
+                <span className="inline-flex items-center gap-2 rounded-full border border-graphite-rail px-3 py-1.5 text-xs font-medium text-fog">
+                  <MapPin size={14} />
                   {profile.location}
                 </span>
               ) : null}
             </div>
-            <h1 className="max-w-[760px] text-5xl font-black leading-[0.92] tracking-normal text-charcoal-void sm:text-7xl lg:text-[84px]">
+            <p className="font-mono text-sm text-sky-blue">{profile.title}</p>
+            <h1 className="mt-5 max-w-[760px] text-5xl font-medium leading-none tracking-normal text-charcoal-void sm:text-7xl lg:text-[88px]">
               {profile.name}
             </h1>
-            <p className="mt-7 max-w-2xl text-base font-medium leading-7 text-midnight-ink/70 sm:text-lg">
+            <p className="mt-7 max-w-2xl text-base font-normal leading-7 text-fog sm:text-lg">
               {profile.shortBio ??
                 "A product-style portfolio for AI, backend systems, and practical engineering decisions."}
             </p>
@@ -82,58 +91,34 @@ export default async function Home() {
             </div>
           </div>
 
-          <div className="motion-reveal motion-reveal-delay-1">
-            <div className="relative overflow-hidden rounded-[var(--radius-cards)] bg-vapor-gray">
-              <Image
-                alt="Minimal 3D geometric shapes used as a portfolio visual system"
-                className="h-[380px] w-full object-cover object-center lg:h-[520px]"
-                height={900}
-                priority
-                src="/images/portfolio-workflow-visual.webp"
-                width={1800}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-cloud-canvas via-cloud-canvas/10 to-transparent" />
-              <div className="absolute left-4 right-4 top-4 flex items-center justify-between rounded-[var(--radius-images)] border border-cloud-canvas/70 bg-cloud-canvas/88 px-4 py-3 text-sm font-medium">
-                <span>Portfolio journey</span>
-                <span className="rounded-[var(--radius-buttons)] bg-soft-rose px-2 py-1 text-xs text-midnight-ink/70">
-                  One-page view
-                </span>
-              </div>
-              <div className="absolute bottom-4 left-4 right-4 grid gap-3 sm:grid-cols-3">
-                {[
-                  ["01", "Context"],
-                  ["02", "Projects"],
-                  ["03", "Contact"],
-                ].map(([value, label]) => (
-                  <div
-                    className="rounded-[var(--radius-images)] bg-cloud-canvas/90 p-4 text-sm font-medium shadow-[0_10px_24px_rgba(27,27,27,0.08)]"
-                    key={label}
-                  >
-                    <p className="text-xs uppercase text-sky-blue">{value}</p>
-                    <p className="mt-2 text-charcoal-void">{label}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          <HeroEvidencePanel
+            email={profile.email}
+            focus={currentFocus}
+            projects={visibleProjects.map((project) => ({
+              category: project.category ?? "Project",
+              title: project.title,
+              timeline: project.startDate ? formatDate(project.startDate) : "Planned",
+            }))}
+            skills={highlightedSkills.map((skill) => skill.name)}
+          />
         </div>
       </section>
 
-      <section className="scroll-section border-b border-midnight-ink/10" id="about">
-        <div className="mx-auto grid max-w-7xl gap-8 px-6 py-16 sm:px-8 lg:grid-cols-[0.85fr_1.15fr] lg:px-10 lg:py-20">
+      <section className="scroll-section surface-noise relative border-b border-graphite-rail" id="about">
+        <div className="relative z-10 mx-auto grid max-w-7xl gap-10 px-6 py-20 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:px-10 lg:py-28">
           <SectionHeader
             eyebrow="About"
             title="Direction, education, and current focus in one scan."
             description={profile.shortBio}
           />
           <div className="grid gap-4">
-            <article className="rounded-[var(--radius-cards)] bg-vapor-gray p-6">
-              <p className="text-sm font-medium uppercase text-sky-blue">Profile</p>
-              <h2 className="mt-4 text-2xl font-black leading-tight text-charcoal-void">
+            <article className="rounded-[var(--radius-cards)] border border-graphite-rail bg-vapor-gray p-6">
+              <p className="font-mono text-xs font-medium uppercase text-sky-blue">Profile</p>
+              <h2 className="mt-4 text-2xl font-medium leading-tight text-charcoal-void">
                 {profile.name}
               </h2>
-              <p className="mt-2 font-medium text-midnight-ink/70">{profile.title}</p>
-              <div className="mt-5 text-sm font-medium leading-6 text-midnight-ink/70">
+              <p className="mt-2 text-sm font-medium text-fog">{profile.title}</p>
+              <div className="mt-5 text-sm font-normal leading-6 text-fog">
                 <ContentBlocks
                   value={profile.longBio}
                   fallback="Profile content will appear here after Sanity is populated."
@@ -142,27 +127,27 @@ export default async function Home() {
             </article>
 
             {primaryExperience ? (
-              <article className="rounded-[var(--radius-cards)] border border-midnight-ink/10 p-6">
+              <article className="rounded-[var(--radius-cards)] border border-graphite-rail bg-cloud-canvas p-6">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
-                    <p className="text-sm font-medium text-sky-blue">
+                    <p className="font-mono text-xs font-medium uppercase text-sky-blue">
                       {primaryExperience.type}
                     </p>
                     <h3 className="mt-2 text-xl font-medium leading-7 text-charcoal-void">
                       {primaryExperience.role}
                     </h3>
-                    <p className="mt-1 text-sm font-medium text-midnight-ink/60">
+                    <p className="mt-1 text-sm font-medium text-fog">
                       {primaryExperience.organization}
                     </p>
                   </div>
-                  <p className="text-sm font-medium text-midnight-ink/55">
+                  <p className="font-mono text-xs text-fog">
                     {formatDate(primaryExperience.startDate)} -{" "}
                     {primaryExperience.isCurrent
                       ? "Present"
                       : formatDate(primaryExperience.endDate)}
                   </p>
                 </div>
-                <div className="mt-5 text-sm font-medium leading-6 text-midnight-ink/70">
+                <div className="mt-5 text-sm font-normal leading-6 text-fog">
                   <ContentBlocks value={primaryExperience.description} />
                 </div>
               </article>
@@ -171,13 +156,13 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="scroll-section border-b border-midnight-ink/10 bg-vapor-gray/55" id="projects">
-        <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:px-10 lg:py-20">
+      <section className="scroll-section resend-grid relative border-b border-graphite-rail" id="projects">
+        <div className="relative z-10 mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-10 lg:py-28">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <SectionHeader
               eyebrow="Projects"
               title="Featured proof, with deeper case studies one click away."
-              description="The Home page keeps this compact. Open the project index or a case study when you need the fuller build story."
+              description="The Home page stays compact. Open the project index or a case study for the fuller build story."
             />
             <Button href="/projects" icon={<ArrowUpRight size={18} />} variant="ghost">
               View all projects
@@ -192,8 +177,8 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="scroll-section border-b border-midnight-ink/10" id="skills">
-        <div className="mx-auto grid max-w-7xl gap-8 px-6 py-16 sm:px-8 lg:grid-cols-[0.78fr_1.22fr] lg:px-10 lg:py-20">
+      <section className="scroll-section surface-noise relative border-b border-graphite-rail" id="skills">
+        <div className="relative z-10 mx-auto grid max-w-7xl gap-10 px-6 py-20 sm:px-8 lg:grid-cols-[0.78fr_1.22fr] lg:px-10 lg:py-28">
           <SectionHeader
             eyebrow="Skills"
             title="Grouped by practical use, not percentages."
@@ -202,21 +187,19 @@ export default async function Home() {
           <div className="grid gap-4 md:grid-cols-2">
             {skillGroups.map(([category, items]) => (
               <section
-                className="rounded-[var(--radius-cards)] bg-vapor-gray p-5"
+                className="rounded-[var(--radius-cards)] border border-graphite-rail bg-vapor-gray p-5"
                 key={category}
               >
                 <div className="flex items-center justify-between gap-4">
-                  <h2 className="text-xl font-black leading-tight text-charcoal-void">
+                  <h2 className="text-xl font-medium leading-tight text-charcoal-void">
                     {category}
                   </h2>
-                  <span className="text-sm font-medium text-midnight-ink/45">
-                    {items.length}
-                  </span>
+                  <span className="font-mono text-xs text-fog">{items.length}</span>
                 </div>
                 <div className="mt-5 flex flex-wrap gap-2">
                   {items.map((skill) => (
                     <span
-                      className="rounded-[var(--radius-buttons)] bg-cloud-canvas px-3 py-1.5 text-sm font-medium"
+                      className="rounded-[var(--radius-buttons)] border border-graphite-rail bg-cloud-canvas px-3 py-1.5 text-sm font-medium text-fog"
                       key={skill.name}
                     >
                       {skill.name}
@@ -229,41 +212,33 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="scroll-section border-b border-midnight-ink/10 bg-vapor-gray/55" id="certificates">
-        <div className="mx-auto grid max-w-7xl gap-8 px-6 py-16 sm:px-8 lg:grid-cols-[0.78fr_1.22fr] lg:px-10 lg:py-20">
+      <section className="scroll-section border-b border-graphite-rail" id="certificates">
+        <div className="mx-auto grid max-w-7xl gap-10 px-6 py-20 sm:px-8 lg:grid-cols-[0.78fr_1.22fr] lg:px-10 lg:py-28">
           <div>
             <SectionHeader
               eyebrow="Certificates"
               title="Learning signals worth keeping visible."
               description="Certificates and awards stay on the main journey because they are fast proof points for reviewers."
             />
-            <div className="mt-8 overflow-hidden rounded-[var(--radius-cards)] border border-midnight-ink/10 bg-cloud-canvas">
-              <Image
-                alt="Abstract credential and skills milestone visual"
-                className="aspect-[16/10] w-full object-cover"
-                height={900}
-                src="/images/capability-map-visual.webp"
-                width={1350}
-              />
-            </div>
+            <CertificateSignalPanel count={certificates.length} issuer={certificates[0]?.issuer} />
           </div>
           <div className="grid gap-3 md:grid-cols-2">
             {certificates.map((certificate) => (
               <article
-                className="rounded-[var(--radius-cards)] border border-midnight-ink/10 bg-cloud-canvas p-5"
+                className="rounded-[var(--radius-cards)] border border-graphite-rail bg-vapor-gray p-5"
                 key={`${certificate.issuer}-${certificate.title}`}
               >
                 <Award className="text-sky-blue" size={20} />
                 <h3 className="mt-4 text-lg font-medium leading-6 text-charcoal-void">
                   {certificate.title}
                 </h3>
-                <p className="mt-2 text-sm font-medium text-midnight-ink/60">
+                <p className="mt-2 text-sm font-medium text-fog">
                   {certificate.issuer}
                   {certificate.issuedDate ? ` / ${formatDate(certificate.issuedDate)}` : ""}
                 </p>
                 {certificate.credentialUrl ? (
                   <a
-                    className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-sky-blue hover:text-midnight-ink"
+                    className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-sky-blue hover:text-charcoal-void"
                     href={certificate.credentialUrl}
                     rel="noreferrer"
                     target="_blank"
@@ -279,7 +254,7 @@ export default async function Home() {
       </section>
 
       <section className="scroll-section" id="contact">
-        <div className="mx-auto grid max-w-7xl gap-8 px-6 py-16 sm:px-8 lg:grid-cols-[0.75fr_1.25fr] lg:px-10 lg:py-20">
+        <div className="mx-auto grid max-w-7xl gap-10 px-6 py-20 sm:px-8 lg:grid-cols-[0.75fr_1.25fr] lg:px-10 lg:py-28">
           <div>
             <SectionHeader
               eyebrow="Contact"
@@ -288,7 +263,7 @@ export default async function Home() {
             />
             <div className="mt-8 grid gap-3">
               <a
-                className="inline-flex items-center gap-3 rounded-[var(--radius-cards)] bg-vapor-gray px-4 py-3 text-sm font-medium hover:text-sky-blue"
+                className="inline-flex items-center gap-3 rounded-[var(--radius-cards)] border border-graphite-rail bg-vapor-gray px-4 py-3 text-sm font-medium text-fog hover:text-charcoal-void"
                 href={emailHref}
               >
                 <Mail size={18} />
@@ -296,7 +271,7 @@ export default async function Home() {
               </a>
               {socialLinks.map((link) => (
                 <a
-                  className="inline-flex items-center gap-3 rounded-[var(--radius-cards)] border border-midnight-ink/10 px-4 py-3 text-sm font-medium hover:text-sky-blue"
+                  className="inline-flex items-center gap-3 rounded-[var(--radius-cards)] border border-graphite-rail px-4 py-3 text-sm font-medium text-fog hover:text-charcoal-void"
                   href={link.href}
                   key={link.href}
                   rel="noreferrer"
@@ -308,11 +283,137 @@ export default async function Home() {
               ))}
             </div>
           </div>
-          <div className="rounded-[var(--radius-cards)] border border-midnight-ink/10 p-6">
+          <div className="rounded-[var(--radius-cards)] border border-graphite-rail bg-vapor-gray p-6">
             <ContactForm fallbackEmail={profile.email} />
           </div>
         </div>
       </section>
     </main>
+  );
+}
+
+function HeroEvidencePanel({
+  email,
+  focus,
+  projects,
+  skills,
+}: {
+  email?: string;
+  focus: string[];
+  projects: Array<{ category: string; title: string; timeline: string }>;
+  skills: string[];
+}) {
+  const rows = projects.length
+    ? projects
+    : [{ category: "Project", title: "Case studies publish from Sanity", timeline: "Draft" }];
+
+  return (
+    <div className="motion-reveal motion-reveal-delay-1 spotlight relative min-h-[560px] overflow-hidden rounded-[var(--radius-cards)] border border-graphite-rail bg-vapor-gray/60 lg:min-h-[620px]">
+      <HeroThreeObject className="absolute inset-0 z-0" />
+      <div className="surface-noise absolute inset-0" />
+      <div className="absolute inset-x-8 top-8 h-px bg-gradient-to-r from-transparent via-charcoal-void/30 to-transparent" />
+      <div className="relative z-10 flex min-h-[560px] flex-col justify-end gap-3 p-3 lg:min-h-[620px] lg:p-5">
+        <div className="ml-auto w-full max-w-sm rounded-[var(--radius-images)] border border-graphite-rail bg-cloud-canvas/82 p-4 backdrop-blur-xl">
+          <div className="flex items-center gap-2 text-sm font-medium text-charcoal-void">
+            <CheckCircle2 className="text-delivered-green" size={17} />
+            Current focus
+          </div>
+          <div className="mt-4 grid gap-2">
+            {focus.map((item) => (
+              <div
+                className="rounded-[var(--radius-inputs)] border border-graphite-rail px-3 py-2 font-mono text-xs text-fog"
+                key={item}
+              >
+                {item}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="rounded-[calc(var(--radius-cards)-4px)] border border-graphite-rail bg-cloud-canvas/90 backdrop-blur-xl">
+          <div className="flex items-center justify-between border-b border-graphite-rail px-4 py-3">
+            <div className="flex items-center gap-2">
+              <span className="h-2.5 w-2.5 rounded-full bg-bounced-red" />
+              <span className="h-2.5 w-2.5 rounded-full bg-complained-yellow" />
+              <span className="h-2.5 w-2.5 rounded-full bg-delivered-green" />
+            </div>
+            <p className="font-mono text-xs text-fog">portfolio.log</p>
+          </div>
+          <div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]">
+            <div className="border-b border-graphite-rail p-5 lg:border-b-0 lg:border-r">
+              <div className="flex items-center gap-2 text-sm font-medium text-charcoal-void">
+                <Terminal size={18} />
+                Evidence stream
+              </div>
+              <div className="mt-5 space-y-4 font-mono text-sm">
+                {rows.map((row, index) => (
+                  <div className="grid grid-cols-[auto_1fr] gap-3" key={`${row.title}-${index}`}>
+                    <span className="pt-1 text-xs text-ash">{String(index + 1).padStart(2, "0")}</span>
+                    <div>
+                      <p className="text-charcoal-void">
+                        <span className="text-resend-violet">{row.category}</span> / {row.title}
+                      </p>
+                      <p className="mt-1 text-xs text-fog">{row.timeline}</p>
+                    </div>
+                  </div>
+                ))}
+                <div className="grid grid-cols-[auto_1fr] gap-3">
+                  <span className="pt-1 text-xs text-ash">03</span>
+                  <p className="text-fog">
+                    contact.to(<span className="text-resend-violet">{email ?? "email"}</span>)
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="p-5">
+              <div className="flex items-center gap-2 text-sm font-medium text-charcoal-void">
+                <Braces size={17} />
+                Stack sample
+              </div>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {skills.map((skill) => (
+                  <span
+                    className="rounded-[var(--radius-buttons)] border border-graphite-rail px-2.5 py-1 font-mono text-xs text-fog"
+                    key={skill}
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+              <div className="mt-4 rounded-[var(--radius-images)] border border-graphite-rail p-4">
+                <div className="flex items-center gap-2 text-sm text-fog">
+                  <CheckCircle2 className="text-delivered-green" size={17} />
+                  Procedural 3D, no generated imagery
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CertificateSignalPanel({ count, issuer }: { count: number; issuer?: string }) {
+  return (
+    <div className="mt-8 rounded-[var(--radius-cards)] border border-graphite-rail bg-vapor-gray p-5">
+      <div className="flex items-center justify-between gap-4 border-b border-graphite-rail pb-4">
+        <p className="font-mono text-xs text-fog">credentials.json</p>
+        <span className="rounded-full border border-graphite-rail px-2.5 py-1 font-mono text-xs text-delivered-green">
+          verified
+        </span>
+      </div>
+      <div className="mt-5 font-mono text-sm leading-7">
+        <p className="text-fog">
+          <span className="text-resend-violet">certificates</span>: {count}
+        </p>
+        <p className="text-fog">
+          <span className="text-resend-violet">latestIssuer</span>: {issuer ?? "Sanity"}
+        </p>
+        <p className="text-fog">
+          <span className="text-resend-violet">surface</span>: compact review signal
+        </p>
+      </div>
+    </div>
   );
 }

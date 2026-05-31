@@ -1,38 +1,32 @@
 @import "tailwindcss";
 
 :root {
-  --color-cloud-canvas: #ffffff;
-  --color-midnight-ink: #1b1b1b;
-  --color-vapor-gray: #f5f5f5;
-  --color-charcoal-void: #000000;
-  --color-sky-blue: #426188;
-  --color-vivid-azure: #2b7fff;
-  --color-soft-lilac: #eee9ff;
-  --color-soft-rose: #ffe7ef;
-  --surface-page-base: #fffdf4;
-  --surface-haze-surface: #f5f5f5;
-  --surface-cloud-canvas: #ffffff;
-  --radius-inputs: 4px;
-  --radius-buttons: 8px;
-  --radius-images: 11px;
-  --radius-cards: 14px;
-  --section-gap: 48px;
-  --background: var(--color-cloud-canvas);
-  --foreground: var(--color-midnight-ink);
-}
-
-html.dark {
-  --color-cloud-canvas: #202226;
-  --color-midnight-ink: #f2efe8;
-  --color-vapor-gray: #2b2e34;
+  --color-cloud-canvas: #000000;
+  --color-midnight-ink: #f0f0f0;
+  --color-vapor-gray: #0b0e14;
   --color-charcoal-void: #ffffff;
-  --color-sky-blue: #a8cdd7;
-  --color-vivid-azure: #7fb8ff;
-  --color-soft-lilac: #373442;
-  --color-soft-rose: #4b343a;
-  --surface-page-base: #202226;
-  --surface-haze-surface: #2b2e34;
-  --surface-cloud-canvas: #26292f;
+  --color-sky-blue: #3b9eff;
+  --color-vivid-azure: #3b9eff;
+  --color-soft-lilac: #14111f;
+  --color-soft-rose: #1a1214;
+  --color-graphite-rail: #292d30;
+  --color-smoke: #464a4d;
+  --color-ash: #6c6c6c;
+  --color-fog: #a1a4a5;
+  --color-resend-violet: #9281f7;
+  --color-delivered-green: #3ad389;
+  --color-bounced-red: #ff9592;
+  --color-complained-yellow: #ffca16;
+  --color-opened-blue: #70b8ff;
+  --color-clicked-lavender: #baa7ff;
+  --surface-page-base: #000000;
+  --surface-haze-surface: #0b0e14;
+  --surface-cloud-canvas: #000000;
+  --radius-inputs: 4px;
+  --radius-buttons: 6px;
+  --radius-images: 12px;
+  --radius-cards: 16px;
+  --section-gap: 96px;
   --background: var(--color-cloud-canvas);
   --foreground: var(--color-midnight-ink);
   color-scheme: dark;
@@ -49,19 +43,31 @@ html.dark {
   --color-vivid-azure: var(--color-vivid-azure);
   --color-soft-lilac: var(--color-soft-lilac);
   --color-soft-rose: var(--color-soft-rose);
+  --color-graphite-rail: var(--color-graphite-rail);
+  --color-smoke: var(--color-smoke);
+  --color-ash: var(--color-ash);
+  --color-fog: var(--color-fog);
+  --color-resend-violet: var(--color-resend-violet);
+  --color-delivered-green: var(--color-delivered-green);
+  --color-bounced-red: var(--color-bounced-red);
+  --color-complained-yellow: var(--color-complained-yellow);
+  --color-opened-blue: var(--color-opened-blue);
+  --color-clicked-lavender: var(--color-clicked-lavender);
   --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+html {
+  background: var(--background);
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
-
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 96px;
+  text-rendering: optimizeLegibility;
 }
 
 a {
@@ -70,7 +76,7 @@ a {
 
 ::selection {
   background: var(--color-vivid-azure);
-  color: var(--color-cloud-canvas);
+  color: var(--color-charcoal-void);
 }
 
 @keyframes reveal-up {
@@ -127,13 +133,78 @@ a {
 }
 
 .scroll-section {
-  scroll-margin-top: 96px;
+  scroll-margin-top: 88px;
+}
+
+.resend-grid,
+.light-ray,
+.spotlight,
+.surface-noise {
+  isolation: isolate;
+}
+
+.resend-grid::before {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+  background-size: 76px 76px;
+  content: "";
+  inset: 0;
+  mask-image: radial-gradient(circle at 50% 26%, black 0, rgba(0, 0, 0, 0.72) 34%, transparent 72%);
+  opacity: 0.42;
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+}
+
+.light-ray::after {
+  background:
+    linear-gradient(104deg, transparent 4%, rgba(255, 255, 255, 0.16) 18%, transparent 36%),
+    linear-gradient(116deg, transparent 14%, rgba(59, 158, 255, 0.12) 34%, transparent 56%);
+  content: "";
+  filter: blur(18px);
+  height: 72%;
+  left: 45%;
+  opacity: 0.68;
+  pointer-events: none;
+  position: absolute;
+  top: -16%;
+  transform: rotate(-8deg);
+  width: 52%;
+  z-index: -1;
+}
+
+.spotlight::before {
+  background:
+    radial-gradient(circle at 66% 18%, rgba(255, 255, 255, 0.16), transparent 28%),
+    radial-gradient(circle at 58% 40%, rgba(59, 158, 255, 0.16), transparent 30%),
+    radial-gradient(circle at 72% 58%, rgba(146, 129, 247, 0.14), transparent 34%);
+  content: "";
+  filter: blur(8px);
+  inset: -20%;
+  opacity: 0.72;
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+}
+
+.surface-noise::after {
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px),
+    radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px);
+  background-size: 22px 22px, 34px 34px;
+  content: "";
+  inset: 0;
+  opacity: 0.18;
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
 }
 
 .route-progress {
-  background: linear-gradient(90deg, var(--color-vivid-azure), #ff7aa8 52%, #6f4cff);
-  box-shadow: 0 0 18px rgba(43, 127, 255, 0.24);
-  height: 3px;
+  background: linear-gradient(90deg, var(--color-vivid-azure), var(--color-resend-violet));
+  box-shadow: 0 0 18px rgba(59, 158, 255, 0.18);
+  height: 2px;
   left: 0;
   opacity: 0;
   pointer-events: none;

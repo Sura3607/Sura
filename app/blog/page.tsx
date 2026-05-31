@@ -27,31 +27,31 @@ export default async function BlogPage() {
         <div className="mt-10 grid gap-4">
           {posts.map((post) => (
             <Link
-              className="group rounded-[var(--radius-cards)] bg-vapor-gray p-6 transition-colors hover:bg-midnight-ink hover:text-cloud-canvas"
+              className="group rounded-[var(--radius-cards)] border border-graphite-rail bg-vapor-gray p-6 transition-colors hover:border-smoke"
               href={`/blog/${post.slug.current}`}
               key={post.slug.current}
             >
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="text-xs font-medium uppercase text-sky-blue group-hover:text-cloud-canvas/70">
+                  <p className="font-mono text-xs font-medium uppercase text-sky-blue">
                     {post.readingTime ? `${post.readingTime} min read` : "Article"}
                   </p>
-                  <h2 className="mt-3 text-2xl font-black leading-tight">{post.title}</h2>
+                  <h2 className="mt-3 text-2xl font-medium leading-tight text-charcoal-void">{post.title}</h2>
                 </div>
                 <ArrowUpRight
-                  className="shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  className="shrink-0 text-fog transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-charcoal-void"
                   size={20}
                 />
               </div>
               {post.excerpt ? (
-                <p className="mt-4 text-sm font-medium leading-6 text-midnight-ink/65 group-hover:text-cloud-canvas/70">
+                <p className="mt-4 text-sm font-normal leading-6 text-fog">
                   {post.excerpt}
                 </p>
               ) : null}
               {post.tags?.length ? (
                 <div className="mt-6 flex flex-wrap gap-2">
                   {post.tags.map((tag) => (
-                    <span className="rounded-[var(--radius-buttons)] border border-midnight-ink/15 px-2 py-1 text-xs font-medium group-hover:border-cloud-canvas/25" key={tag}>
+                    <span className="rounded-[var(--radius-buttons)] border border-graphite-rail px-2 py-1 font-mono text-xs text-fog" key={tag}>
                       {tag}
                     </span>
                   ))}

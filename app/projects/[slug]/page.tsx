@@ -42,7 +42,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
       <div className="mt-8 flex flex-wrap gap-2">
         {(project.techStack ?? []).map((tech) => (
-          <span className="rounded-[var(--radius-buttons)] bg-vapor-gray px-3 py-1.5 text-sm font-medium" key={tech}>
+          <span className="rounded-[var(--radius-buttons)] border border-graphite-rail bg-vapor-gray px-3 py-1.5 font-mono text-xs text-fog" key={tech}>
             {tech}
           </span>
         ))}
@@ -67,14 +67,14 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           ["Role", project.role ?? "Contributor"],
           ["Timeline", dateRange ?? "Not specified"],
         ].map(([label, value]) => (
-          <div className="rounded-[var(--radius-cards)] bg-vapor-gray p-5" key={label}>
-            <p className="text-xs font-medium uppercase text-sky-blue">{label}</p>
+          <div className="rounded-[var(--radius-cards)] border border-graphite-rail bg-vapor-gray p-5" key={label}>
+            <p className="font-mono text-xs uppercase text-sky-blue">{label}</p>
             <p className="mt-3 text-lg font-medium leading-6">{value}</p>
           </div>
         ))}
       </section>
 
-      <section className="mt-12 space-y-10 text-sm font-medium leading-7 text-midnight-ink/70">
+      <section className="mt-12 space-y-10 text-sm font-normal leading-7 text-fog">
         <ArticleSection title="Problem" value={project.problem} fallback="Add the user or technical problem in Sanity." />
         <ArticleSection title="Solution" value={project.solution} fallback="Add the implemented solution and decisions in Sanity." />
         <ArticleSection title="Architecture" value={project.architecture} fallback="Add system shape, integrations, and tradeoffs in Sanity." />
@@ -100,7 +100,7 @@ function ArticleSection({
 
   return (
     <section>
-      <h2 className="text-2xl font-black leading-tight text-charcoal-void">{title}</h2>
+      <h2 className="text-2xl font-medium leading-tight text-charcoal-void">{title}</h2>
       <div className="mt-4">
         <ContentBlocks value={value} fallback={fallback} />
       </div>

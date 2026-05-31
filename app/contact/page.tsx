@@ -21,16 +21,16 @@ export default async function ContactPage() {
       <SectionHeader
         eyebrow="Contact"
         title="A clear path for recruiters and collaborators."
-        description="Phase 03 keeps contact simple with mailto. Phase 04 can replace this with the validated Resend-backed form."
+        description="Use mailto for quick follow-up, or send a structured message through the server route."
       />
 
       <div className="mt-10 grid gap-4 sm:grid-cols-2">
-        <div className="rounded-[var(--radius-cards)] bg-vapor-gray p-6">
+        <div className="rounded-[var(--radius-cards)] border border-graphite-rail bg-vapor-gray p-6">
           <Mail className="text-sky-blue" size={22} />
           <h2 className="mt-5 text-xl font-medium leading-7 text-charcoal-void">
             Email
           </h2>
-          <p className="mt-3 text-sm font-medium leading-6 text-midnight-ink/65">
+          <p className="mt-3 text-sm font-normal leading-6 text-fog">
             Use email for project conversations, hiring loops, and collaboration notes.
           </p>
           <div className="mt-5">
@@ -40,12 +40,12 @@ export default async function ContactPage() {
           </div>
         </div>
 
-        <div className="rounded-[var(--radius-cards)] border border-midnight-ink/10 p-6">
+        <div className="rounded-[var(--radius-cards)] border border-graphite-rail p-6">
           <MapPin className="text-sky-blue" size={22} />
           <h2 className="mt-5 text-xl font-medium leading-7 text-charcoal-void">
             Location
           </h2>
-          <p className="mt-3 text-sm font-medium leading-6 text-midnight-ink/65">
+          <p className="mt-3 text-sm font-normal leading-6 text-fog">
             {profile.location ?? "Location will appear after the profile document is filled."}
           </p>
           {profile.githubUrl ? (
@@ -58,11 +58,11 @@ export default async function ContactPage() {
         </div>
       </div>
 
-      <section className="mt-10 rounded-[var(--radius-cards)] border border-midnight-ink/10 p-6">
-        <h2 className="text-2xl font-black leading-tight text-charcoal-void">
+      <section className="mt-10 rounded-[var(--radius-cards)] border border-graphite-rail bg-vapor-gray p-6">
+        <h2 className="text-2xl font-medium leading-tight text-charcoal-void">
           Send a structured message
         </h2>
-        <p className="mt-3 text-sm font-medium leading-6 text-midnight-ink/65">
+        <p className="mt-3 text-sm font-normal leading-6 text-fog">
           This form uses the server route and falls back to email if Resend is not configured.
         </p>
         <div className="mt-6">

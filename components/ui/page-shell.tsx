@@ -8,7 +8,7 @@ type PageShellProps = {
 export function PageShell({ children, narrow = false }: PageShellProps) {
   return (
     <main
-      className={`mx-auto w-full px-6 py-16 sm:px-8 lg:px-10 ${
+      className={`mx-auto w-full px-6 py-20 sm:px-8 lg:px-10 lg:py-24 ${
         narrow ? "max-w-5xl" : "max-w-7xl"
       }`}
     >

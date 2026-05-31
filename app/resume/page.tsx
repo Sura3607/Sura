@@ -26,28 +26,28 @@ export default async function ResumePage() {
         description={profile.shortBio}
       />
 
-      <section className="mt-10 rounded-[var(--radius-cards)] bg-vapor-gray p-6 text-sm font-medium leading-6 text-midnight-ink/70">
+      <section className="mt-10 rounded-[var(--radius-cards)] border border-graphite-rail bg-vapor-gray p-6 text-sm font-normal leading-6 text-fog">
         <ContentBlocks value={profile.longBio} />
       </section>
 
       <section className="mt-12">
-        <h2 className="text-2xl font-black leading-tight text-charcoal-void">Experience</h2>
+        <h2 className="text-2xl font-medium leading-tight text-charcoal-void">Experience</h2>
         <div className="mt-5 grid gap-4">
           {experiences.map((experience) => (
-            <article className="border-b border-midnight-ink/10 pb-5 last:border-b-0" key={`${experience.organization}-${experience.role}`}>
+            <article className="border-b border-graphite-rail pb-5 last:border-b-0" key={`${experience.organization}-${experience.role}`}>
               <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                 <div>
                   <h3 className="text-lg font-medium">{experience.role}</h3>
-                  <p className="text-sm font-medium text-midnight-ink/60">
+                  <p className="text-sm font-medium text-fog">
                     {experience.organization} / {experience.type}
                   </p>
                 </div>
-                <p className="text-sm font-medium text-midnight-ink/55">
+                <p className="font-mono text-xs text-fog">
                   {formatDate(experience.startDate)} -{" "}
                   {experience.isCurrent ? "Present" : formatDate(experience.endDate)}
                 </p>
               </div>
-              <div className="mt-3 text-sm font-medium leading-6 text-midnight-ink/70">
+              <div className="mt-3 text-sm font-normal leading-6 text-fog">
                 <ContentBlocks value={experience.description} />
               </div>
             </article>
@@ -57,22 +57,22 @@ export default async function ResumePage() {
 
       <section className="mt-12 grid gap-4 md:grid-cols-2">
         <div>
-          <h2 className="text-2xl font-black leading-tight text-charcoal-void">Skills</h2>
+          <h2 className="text-2xl font-medium leading-tight text-charcoal-void">Skills</h2>
           <div className="mt-5 flex flex-wrap gap-2">
             {skills.map((skill) => (
-              <span className="rounded-[var(--radius-buttons)] bg-vapor-gray px-3 py-1.5 text-sm font-medium" key={skill.name}>
+              <span className="rounded-[var(--radius-buttons)] border border-graphite-rail bg-vapor-gray px-3 py-1.5 text-sm font-medium text-fog" key={skill.name}>
                 {skill.name}
               </span>
             ))}
           </div>
         </div>
         <div>
-          <h2 className="text-2xl font-black leading-tight text-charcoal-void">Certificates</h2>
+          <h2 className="text-2xl font-medium leading-tight text-charcoal-void">Certificates</h2>
           <div className="mt-5 grid gap-3">
             {certificates.map((certificate) => (
-              <article className="rounded-[var(--radius-cards)] border border-midnight-ink/10 p-4" key={`${certificate.issuer}-${certificate.title}`}>
+              <article className="rounded-[var(--radius-cards)] border border-graphite-rail bg-vapor-gray p-4" key={`${certificate.issuer}-${certificate.title}`}>
                 <p className="font-medium">{certificate.title}</p>
-                <p className="mt-1 text-sm font-medium text-midnight-ink/60">
+                <p className="mt-1 text-sm font-medium text-fog">
                   {certificate.issuer}
                 </p>
               </article>

@@ -23,24 +23,24 @@ export default async function SkillsPage() {
 
       <div className="mt-10 grid gap-4 md:grid-cols-2">
         {Object.entries(groups).map(([category, items]) => (
-          <section className="rounded-[var(--radius-cards)] bg-vapor-gray p-6" key={category}>
+          <section className="rounded-[var(--radius-cards)] border border-graphite-rail bg-vapor-gray p-6" key={category}>
             <div className="flex items-center justify-between gap-4">
-              <h2 className="text-2xl font-black leading-tight text-charcoal-void">
+              <h2 className="text-2xl font-medium leading-tight text-charcoal-void">
                 {category}
               </h2>
-              <span className="text-sm font-medium text-midnight-ink/45">
+              <span className="font-mono text-xs text-fog">
                 {items.length}
               </span>
             </div>
             <div className="mt-6 grid gap-2">
               {items.map((skill) => (
-                <div className="rounded-[var(--radius-buttons)] bg-cloud-canvas px-4 py-3" key={skill.name}>
+                <div className="rounded-[var(--radius-buttons)] border border-graphite-rail bg-cloud-canvas px-4 py-3" key={skill.name}>
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                     <p className="font-medium">{skill.name}</p>
-                    <p className="text-xs font-medium text-sky-blue">{skill.level}</p>
+                    <p className="font-mono text-xs text-sky-blue">{skill.level}</p>
                   </div>
                   {skill.usedInProjects?.length ? (
-                    <p className="mt-2 text-xs font-medium text-midnight-ink/55">
+                    <p className="mt-2 text-xs font-medium text-fog">
                       Used in {skill.usedInProjects.map((project) => project.title).join(", ")}
                     </p>
                   ) : null}

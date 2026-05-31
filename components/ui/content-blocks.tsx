@@ -23,7 +23,7 @@ export function ContentBlocks({ value, fallback }: ContentBlocksProps) {
           block: {
             normal: ({ children }) => <p>{children}</p>,
             h2: ({ children }) => (
-              <h2 className="pt-4 text-2xl font-black leading-tight text-charcoal-void">
+              <h2 className="pt-4 text-2xl font-medium leading-tight text-charcoal-void">
                 {children}
               </h2>
             ),
@@ -33,7 +33,7 @@ export function ContentBlocks({ value, fallback }: ContentBlocksProps) {
               </h3>
             ),
             blockquote: ({ children }) => (
-              <blockquote className="border-l-2 border-vivid-azure pl-4 text-midnight-ink/70">
+              <blockquote className="border-l-2 border-vivid-azure pl-4 text-fog">
                 {children}
               </blockquote>
             ),
@@ -56,7 +56,7 @@ export function ContentBlocks({ value, fallback }: ContentBlocksProps) {
               );
             },
             code: ({ children }) => (
-              <code className="rounded-[var(--radius-inputs)] bg-vapor-gray px-1.5 py-0.5 font-mono text-sm">
+              <code className="rounded-[var(--radius-inputs)] border border-graphite-rail bg-cloud-canvas px-1.5 py-0.5 font-mono text-sm text-resend-violet">
                 {children}
               </code>
             ),

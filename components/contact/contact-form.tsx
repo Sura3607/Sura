@@ -55,11 +55,11 @@ export function ContactForm({ fallbackEmail }: ContactFormProps) {
       </div>
 
       <div>
-        <label className="text-sm font-medium text-midnight-ink/70" htmlFor="name">
+        <label className="text-sm font-medium text-fog" htmlFor="name">
           Name
         </label>
         <input
-          className="mt-2 h-11 w-full rounded-[var(--radius-inputs)] border border-midnight-ink/10 bg-vapor-gray px-3 text-sm font-medium outline-none focus:border-vivid-azure"
+          className="mt-2 h-11 w-full rounded-[var(--radius-inputs)] border border-graphite-rail bg-cloud-canvas px-3 text-sm font-medium text-charcoal-void outline-none transition-colors focus:border-vivid-azure"
           id="name"
           maxLength={120}
           minLength={2}
@@ -69,11 +69,11 @@ export function ContactForm({ fallbackEmail }: ContactFormProps) {
       </div>
 
       <div>
-        <label className="text-sm font-medium text-midnight-ink/70" htmlFor="email">
+        <label className="text-sm font-medium text-fog" htmlFor="email">
           Email
         </label>
         <input
-          className="mt-2 h-11 w-full rounded-[var(--radius-inputs)] border border-midnight-ink/10 bg-vapor-gray px-3 text-sm font-medium outline-none focus:border-vivid-azure"
+          className="mt-2 h-11 w-full rounded-[var(--radius-inputs)] border border-graphite-rail bg-cloud-canvas px-3 text-sm font-medium text-charcoal-void outline-none transition-colors focus:border-vivid-azure"
           id="email"
           maxLength={180}
           name="email"
@@ -83,11 +83,11 @@ export function ContactForm({ fallbackEmail }: ContactFormProps) {
       </div>
 
       <div>
-        <label className="text-sm font-medium text-midnight-ink/70" htmlFor="message">
+        <label className="text-sm font-medium text-fog" htmlFor="message">
           Message
         </label>
         <textarea
-          className="mt-2 min-h-36 w-full resize-y rounded-[var(--radius-inputs)] border border-midnight-ink/10 bg-vapor-gray px-3 py-3 text-sm font-medium leading-6 outline-none focus:border-vivid-azure"
+          className="mt-2 min-h-36 w-full resize-y rounded-[var(--radius-inputs)] border border-graphite-rail bg-cloud-canvas px-3 py-3 text-sm font-medium leading-6 text-charcoal-void outline-none transition-colors focus:border-vivid-azure"
           id="message"
           maxLength={5000}
           minLength={10}
@@ -97,7 +97,7 @@ export function ContactForm({ fallbackEmail }: ContactFormProps) {
       </div>
 
       <button
-        className="inline-flex h-12 w-fit items-center justify-center gap-2 rounded-[var(--radius-buttons)] border border-vivid-azure bg-transparent px-5 text-base font-medium text-midnight-ink transition-colors hover:bg-vivid-azure hover:text-cloud-canvas disabled:cursor-not-allowed disabled:opacity-60"
+        className="inline-flex h-11 w-fit items-center justify-center gap-2 rounded-[var(--radius-buttons)] border border-vivid-azure bg-transparent px-5 text-sm font-medium text-charcoal-void transition-colors hover:border-charcoal-void disabled:cursor-not-allowed disabled:opacity-60"
         disabled={state === "submitting"}
         type="submit"
       >
@@ -109,8 +109,8 @@ export function ContactForm({ fallbackEmail }: ContactFormProps) {
         <p
           className={`rounded-[var(--radius-buttons)] px-4 py-3 text-sm font-medium ${
             state === "success"
-              ? "bg-green-50 text-green-800"
-              : "bg-vapor-gray text-midnight-ink/70"
+              ? "border border-delivered-green/40 bg-cloud-canvas text-delivered-green"
+              : "border border-graphite-rail bg-cloud-canvas text-fog"
           }`}
         >
           {message}

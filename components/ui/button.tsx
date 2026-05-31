@@ -17,11 +17,11 @@ export function Button({
   variant = "outline",
 }: ButtonProps) {
   const isExternal = href.startsWith("http") || href.startsWith("mailto:");
-  const sizeClass = size === "sm" ? "h-10 px-4 text-sm" : "h-12 px-5 text-base";
+  const sizeClass = size === "sm" ? "h-10 px-4 text-sm" : "h-11 px-5 text-sm";
   const variantClass =
     variant === "ghost"
-      ? "border-midnight-ink/15 text-midnight-ink hover:border-midnight-ink hover:bg-vapor-gray"
-      : "border-vivid-azure text-midnight-ink hover:-translate-y-0.5 hover:bg-vivid-azure hover:text-cloud-canvas hover:shadow-[0_12px_24px_rgba(43,127,255,0.16)]";
+      ? "border-graphite-rail text-fog hover:border-smoke hover:text-charcoal-void"
+      : "border-vivid-azure text-charcoal-void hover:border-charcoal-void";
   const className = `inline-flex items-center justify-center gap-2 rounded-[var(--radius-buttons)] border bg-transparent font-medium transition-all duration-200 ${sizeClass} ${variantClass}`;
 
   if (isExternal) {

@@ -26,7 +26,7 @@ export default async function ProjectsPage() {
       {categories.length ? (
         <div className="mt-8 flex flex-wrap gap-2">
           {categories.map((category) => (
-            <span className="rounded-[var(--radius-buttons)] border border-midnight-ink/15 px-3 py-1.5 text-sm font-medium" key={category}>
+            <span className="rounded-[var(--radius-buttons)] border border-graphite-rail px-3 py-1.5 font-mono text-xs text-fog" key={category}>
               {category}
             </span>
           ))}

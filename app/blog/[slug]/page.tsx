@@ -40,13 +40,13 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
         {post.tags?.length ? (
           <div className="mt-8 flex flex-wrap gap-2">
             {post.tags.map((tag) => (
-              <span className="rounded-[var(--radius-buttons)] bg-vapor-gray px-3 py-1.5 text-sm font-medium" key={tag}>
+              <span className="rounded-[var(--radius-buttons)] border border-graphite-rail bg-vapor-gray px-3 py-1.5 font-mono text-xs text-fog" key={tag}>
                 {tag}
               </span>
             ))}
           </div>
         ) : null}
-        <div className="mt-12 text-base font-medium leading-8 text-midnight-ink/72">
+        <div className="mt-12 text-base font-normal leading-8 text-fog">
           <ContentBlocks value={post.body} fallback="Article content will appear after the Sanity body field is filled." />
         </div>
       </article>
