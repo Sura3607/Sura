@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
 import { PageTransition } from "@/components/layout/page-transition";
-import { createMetadata } from "@/lib/seo";
+import { createMetadata, getBaseUrl } from "@/lib/seo";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
       "Portfolio for AI, backend systems, and product-minded software engineering.",
     path: "/",
   }),
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  metadataBase: new URL(getBaseUrl()),
   title: {
     default: "Sura Portfolio",
     template: "%s | Sura Portfolio",

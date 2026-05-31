@@ -14,7 +14,15 @@ const defaultDescription =
   "Portfolio for AI, backend systems, and product-minded software engineering.";
 
 export function getBaseUrl() {
-  return process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  if (process.env.NEXT_PUBLIC_SITE_URL) {
+    return process.env.NEXT_PUBLIC_SITE_URL;
+  }
+
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  return "http://localhost:3000";
 }
 
 export function absoluteUrl(path = "/") {
