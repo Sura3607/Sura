@@ -4,7 +4,7 @@ import { SectionHeader } from "@/components/sections/section-header";
 import { Button } from "@/components/ui/button";
 import { ContentBlocks } from "@/components/ui/content-blocks";
 import { PageShell } from "@/components/ui/page-shell";
-import { getProjectBySlug } from "@/lib/content";
+import { formatProjectDateRange, getProjectBySlug } from "@/lib/content";
 import { createMetadata } from "@/lib/seo";
 
 type ProjectDetailPageProps = {
@@ -29,6 +29,8 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
   if (!project) {
     notFound();
   }
+
+  const dateRange = formatProjectDateRange(project.startDate, project.endDate);
 
   return (
     <PageShell narrow>
@@ -63,7 +65,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         {[
           ["Status", project.status ?? "Completed"],
           ["Role", project.role ?? "Contributor"],
-          ["Priority", project.featured ? "Featured" : "Case study"],
+          ["Timeline", dateRange ?? "Not specified"],
         ].map(([label, value]) => (
           <div className="rounded-[var(--radius-cards)] bg-vapor-gray p-5" key={label}>
             <p className="text-xs font-medium uppercase text-sky-blue">{label}</p>

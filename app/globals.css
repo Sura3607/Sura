@@ -7,6 +7,8 @@
   --color-charcoal-void: #000000;
   --color-sky-blue: #426188;
   --color-vivid-azure: #2b7fff;
+  --color-soft-lilac: #eee9ff;
+  --color-soft-rose: #ffe7ef;
   --surface-page-base: #fffdf4;
   --surface-haze-surface: #f5f5f5;
   --surface-cloud-canvas: #ffffff;
@@ -19,6 +21,23 @@
   --foreground: var(--color-midnight-ink);
 }
 
+html.dark {
+  --color-cloud-canvas: #202226;
+  --color-midnight-ink: #f2efe8;
+  --color-vapor-gray: #2b2e34;
+  --color-charcoal-void: #ffffff;
+  --color-sky-blue: #a8cdd7;
+  --color-vivid-azure: #7fb8ff;
+  --color-soft-lilac: #373442;
+  --color-soft-rose: #4b343a;
+  --surface-page-base: #202226;
+  --surface-haze-surface: #2b2e34;
+  --surface-cloud-canvas: #26292f;
+  --background: var(--color-cloud-canvas);
+  --foreground: var(--color-midnight-ink);
+  color-scheme: dark;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -28,6 +47,8 @@
   --color-charcoal-void: var(--color-charcoal-void);
   --color-sky-blue: var(--color-sky-blue);
   --color-vivid-azure: var(--color-vivid-azure);
+  --color-soft-lilac: var(--color-soft-lilac);
+  --color-soft-rose: var(--color-soft-rose);
   --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
@@ -38,6 +59,11 @@ body {
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
 a {
   text-underline-offset: 4px;
 }
@@ -45,4 +71,132 @@ a {
 ::selection {
   background: var(--color-vivid-azure);
   color: var(--color-cloud-canvas);
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float-panel {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes progress-sheen {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.motion-reveal {
+  animation: reveal-up 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.motion-reveal-delay-1 {
+  animation-delay: 90ms;
+}
+
+.motion-reveal-delay-2 {
+  animation-delay: 180ms;
+}
+
+.motion-float {
+  animation: float-panel 6s ease-in-out infinite;
+}
+
+.motion-sheen::after {
+  animation: progress-sheen 2.8s ease-in-out infinite;
+}
+
+.scroll-section {
+  scroll-margin-top: 96px;
+}
+
+.route-progress {
+  background: linear-gradient(90deg, var(--color-vivid-azure), #ff7aa8 52%, #6f4cff);
+  box-shadow: 0 0 18px rgba(43, 127, 255, 0.24);
+  height: 3px;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  right: 0;
+  top: 0;
+  transform: scale3d(0, 1, 1);
+  transform-origin: left;
+  transition:
+    opacity 100ms ease,
+    transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 90;
+}
+
+.route-progress.active {
+  opacity: 1;
+  transform: scale3d(1, 1, 1);
+}
+
+.route-shell {
+  flex: 1;
+  transition:
+    opacity 140ms ease,
+    transform 160ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.route-shell-leaving {
+  opacity: 0.78;
+  transform: translate3d(0, -7px, 0) scale(0.998);
+}
+
+.route-shell-entering {
+  animation: route-enter 300ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes route-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0) scale(0.992);
+  }
+
+  48% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .route-progress {
+    display: none;
+  }
+
 }

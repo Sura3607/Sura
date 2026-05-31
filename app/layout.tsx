@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
+import { PageTransition } from "@/components/layout/page-transition";
 import { createMetadata } from "@/lib/seo";
 import "./globals.css";
 
@@ -24,10 +25,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi" className="h-full antialiased">
+    <html lang="vi" className="h-full antialiased" suppressHydrationWarning>
       <body className="flex min-h-full flex-col bg-background text-foreground">
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var t=localStorage.getItem('theme');var d=t==='dark';document.documentElement.classList.toggle('dark',d);document.documentElement.dataset.theme=d?'dark':'light'}catch(e){document.documentElement.dataset.theme='light'}",
+          }}
+        />
         <Navbar />
-        <div className="flex-1">{children}</div>
+        <PageTransition>
+          <div className="flex-1">{children}</div>
+        </PageTransition>
         <Footer />
       </body>
     </html>

@@ -1,6 +1,4 @@
-import { Download } from "lucide-react";
 import { SectionHeader } from "@/components/sections/section-header";
-import { Button } from "@/components/ui/button";
 import { ContentBlocks } from "@/components/ui/content-blocks";
 import { PageShell } from "@/components/ui/page-shell";
 import { formatDate, getCertificates, getExperiences, getProfile, getSkills } from "@/lib/content";
@@ -8,7 +6,7 @@ import { createMetadata } from "@/lib/seo";
 
 export const metadata = createMetadata({
   title: "Resume",
-  description: "Online resume and downloadable PDF.",
+  description: "Online resume.",
   path: "/resume",
 });
 
@@ -19,20 +17,14 @@ export default async function ResumePage() {
     getCertificates(),
     getSkills(),
   ]);
-  const resumeHref = profile.resumeUrl ?? "/resume.pdf";
 
   return (
     <PageShell narrow>
-      <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
-        <SectionHeader
-          eyebrow="Resume"
-          title={profile.name}
-          description={profile.shortBio}
-        />
-        <Button href={resumeHref} icon={<Download size={18} />}>
-          Download CV
-        </Button>
-      </div>
+      <SectionHeader
+        eyebrow="Resume"
+        title={profile.name}
+        description={profile.shortBio}
+      />
 
       <section className="mt-10 rounded-[var(--radius-cards)] bg-vapor-gray p-6 text-sm font-medium leading-6 text-midnight-ink/70">
         <ContentBlocks value={profile.longBio} />

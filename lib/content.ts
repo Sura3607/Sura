@@ -317,6 +317,54 @@ export function formatDate(value?: string) {
   }).format(new Date(value));
 }
 
+export function formatProjectDateRange(startDate?: string, endDate?: string) {
+  const start = parseDateOnly(startDate);
+  const end = parseDateOnly(endDate);
+
+  if (!start && !end) {
+    return null;
+  }
+
+  const dayMonth = new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "short",
+    timeZone: "UTC",
+  });
+  const dayMonthYear = new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+
+  if (start && end) {
+    if (start.getUTCFullYear() === end.getUTCFullYear()) {
+      return `${dayMonth.format(start)} - ${dayMonthYear.format(end)}`;
+    }
+
+    return `${dayMonthYear.format(start)} - ${dayMonthYear.format(end)}`;
+  }
+
+  if (start) {
+    return `From ${dayMonthYear.format(start)}`;
+  }
+
+  if (end) {
+    return `Until ${dayMonthYear.format(end)}`;
+  }
+
+  return null;
+}
+
+function parseDateOnly(value?: string) {
+  if (!value) {
+    return null;
+  }
+
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
 export function plainBlocks(paragraphs: string[]) {
   return paragraphs.map((paragraph, index) => ({
     _type: "block",
