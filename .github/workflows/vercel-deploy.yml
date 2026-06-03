@@ -13,6 +13,13 @@ concurrency:
   group: vercel-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: 22
+  VERCEL_CLI_VERSION: 54.7.1
+
 jobs:
   quality:
     name: Lint, typecheck, and build
@@ -25,7 +32,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: ${{ env.NODE_VERSION }}
           cache: npm
 
       - name: Install dependencies
@@ -44,33 +51,59 @@ jobs:
     name: Deploy production to Vercel
     runs-on: ubuntu-latest
     needs: quality
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
 
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Verify Vercel secrets
+        shell: bash
+        run: |
+          missing=0
+
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "::error title=Missing GitHub secret::VERCEL_TOKEN is required for Vercel CLI authentication."
+            missing=1
+          fi
+
+          if [ -z "$VERCEL_ORG_ID" ]; then
+            echo "::error title=Missing GitHub secret::VERCEL_ORG_ID is required. Expected value: team_DUfYQOlxoV92LApSsWUhaHLQ"
+            missing=1
+          fi
+
+          if [ -z "$VERCEL_PROJECT_ID" ]; then
+            echo "::error title=Missing GitHub secret::VERCEL_PROJECT_ID is required. Expected value: prj_rszV0EHHkOgRW5BkBfbfR6Io13HG"
+            missing=1
+          fi
+
+          if [ "$missing" -ne 0 ]; then
+            echo "Add the missing values in GitHub: Settings > Secrets and variables > Actions > New repository secret."
+            exit 1
+          fi
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: ${{ env.NODE_VERSION }}
           cache: npm
 
       - name: Install dependencies
         run: npm ci
 
       - name: Install Vercel CLI
-        run: npm install --global vercel@latest
+        run: npm install --global vercel@${{ env.VERCEL_CLI_VERSION }}
 
       - name: Pull Vercel production environment
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
 
       - name: Build Vercel output
-        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel build --prod --token="$VERCEL_TOKEN"
 
       - name: Deploy prebuilt output
-        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"

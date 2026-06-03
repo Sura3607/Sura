@@ -1,0 +1,30 @@
+name: Keep Portfolio Awake
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: keepalive-production
+  cancel-in-progress: false
+
+jobs:
+  ping:
+    name: Ping production portfolio
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ping production home page
+        run: |
+          curl \
+            --fail \
+            --location \
+            --max-time 20 \
+            --retry 2 \
+            --retry-delay 5 \
+            --user-agent "Sura-Keepalive-GitHubActions" \
+            https://sura-snowy.vercel.app/
